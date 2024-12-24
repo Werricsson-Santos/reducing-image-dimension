@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Função para salvar uma imagem no formato PPM
 def save_as_ppm(image, output_file):
-    image = Image.open(thais_png).convert("RGB")  # Certifica-se de que está em RGB
+    image = Image.open(lenna_png).convert("RGB")  # Certifica-se de que está em RGB
     width, height = image.size
     pixels = list(image.getdata())
     with open(output_file, 'w') as f:
@@ -19,8 +19,8 @@ def save_as_ppm(image, output_file):
 
 def save_as_ppm_optimized(input_path, output_path): # Usa o numpy para obter o array de pixels, melhorando a performance.
     # Carregar a imagem
-    thais = Image.open(input_path).convert("RGB")
-    pixels = np.array(thais)
+    lenna = Image.open(input_path).convert("RGB")
+    pixels = np.array(lenna)
 
     # Obter dimensões
     height, width, _ = pixels.shape
@@ -105,39 +105,39 @@ def ppm_to_binary(ppm_file, output_file, threshold=128):
 
 # Função para converter uma imagem usando Pillow
 def convert_image(input_file, output_file, mode=None):
-    thais = Image.open(input_file)
+    img = Image.open(input_file)
     if mode:
-        thais = thais.convert(mode)
-    thais.save(output_file)
+        img = img.convert(mode)
+    img.save(output_file)
     print(f"Imagem convertida e salva como {output_file}")
 
 
 # Caminhos dos arquivos
-thais_png = "images/thais.png"
-thais_ppm = "images/thais.ppm"
-thais_gray_ppm = "images/thais_gray.ppm"
-thais_binary_ppm = "images/thais_binary.ppm"
-thais_gray_png = "images/thais_gray.png"
-thais_binary_png = "images/thais_binary.png"
+lenna_png = "images/lenna.png"
+lenna_ppm = "images/lenna.ppm"
+lenna_gray_ppm = "images/lenna_gray.ppm"
+lenna_binary_ppm = "images/lenna_binary.ppm"
+lenna_gray_png = "images/lenna_gray.png"
+lenna_binary_png = "images/lenna_binary.png"
 
 # Passo 1: Converter PNG para PPM
-save_as_ppm_optimized(thais_png, thais_ppm)
+save_as_ppm_optimized(lenna_png, lenna_ppm)
 
 # Passo 2: Converter PPM para tons de cinza
-ppm_to_grayscale(thais_ppm, thais_gray_ppm)
+ppm_to_grayscale(lenna_ppm, lenna_gray_ppm)
 
 # Passo 3: Converter tons de cinza para binário
-ppm_to_binary(thais_gray_ppm, thais_binary_ppm, threshold=128)
+ppm_to_binary(lenna_gray_ppm, lenna_binary_ppm, threshold=128)
 
 # Passo 4: Converter PPMs modificados de volta para PNG
-convert_image(thais_gray_ppm, thais_gray_png)
-convert_image(thais_binary_ppm, thais_binary_png)
+convert_image(lenna_gray_ppm, lenna_gray_png)
+convert_image(lenna_binary_ppm, lenna_binary_png)
 
 
 # Exibe os resultados
-original_image = np.array(Image.open(thais_png))
-gray_image = np.array(Image.open(thais_gray_png))
-binary_image = np.array(Image.open(thais_binary_png))
+original_image = np.array(Image.open(lenna_png))
+gray_image = np.array(Image.open(lenna_gray_png))
+binary_image = np.array(Image.open(lenna_binary_png))
 
 plt.figure(figsize=(12, 4))
 plt.subplot(1, 3, 1)
